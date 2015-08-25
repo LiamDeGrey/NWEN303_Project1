@@ -17,7 +17,7 @@ public class Client extends Member {
     }
 
     @Override
-    protected boolean checkService() {
+    protected int checkService() {
         return BulletinBoard.checkServiceProvided(serviceId);
     }
 

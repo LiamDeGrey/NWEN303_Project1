@@ -13,12 +13,12 @@ public class Provider extends Member {
 
     @Override
     protected void postService() {
-        BulletinBoard.postServiceProvided(serviceId);
+        BulletinBoard.postServiceProvided(serviceId, placesLeft);
     }
 
     @Override
-    protected boolean checkService() {
-        return BulletinBoard.checkServiceNeeded(serviceId);
+    protected int checkService() {
+        return BulletinBoard.checkServiceNeeded(serviceId, placesLeft);
     }
 
     @Override
