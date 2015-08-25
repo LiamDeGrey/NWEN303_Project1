@@ -1,38 +1,26 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Created by Liam on 19-Aug-15.
  */
 public class Main {
 
     public static void main(final String[] args) {
-        Client[] clients;
-        Provider[] providers;
-        if (args.length > 0) {
-            clients = new Client[Integer.parseInt(args[0])];
-        } else {
-            clients = new Client[5];//(int) (Math.random() * 9) + 1];
-        }
-        if (args.length > 1) {
-            providers = new Provider[Integer.parseInt(args[1])];
-        } else {
-            providers = new Provider[5];//(int) (Math.random() * 9) + 1];
-        }
+        int numClients = args.length > 0? Integer.parseInt(args[0]) : 5;
+        int numProviders = args.length > 1? Integer.parseInt(args[1]) : 5;
 
-        new Client().start();
-        new Provider().start();
-        new Client().start();
-        new Provider().start();
-        new Client().start();
-        new Provider().start();
-        /*for (Provider provider : providers) {
-            provider = new Provider();
-            provider.start();
+        ArrayList<Member> members = new ArrayList<>();
+        for (int i = 0; i < numClients; i++) {
+            members.add(new Client());
         }
+        for (int i = 0; i < numProviders; i++) {
+            members.add(new Provider());
+        }
+        Collections.shuffle(members);
 
-        for (Client client : clients) {
-            client = new Client();
-            client.start();
-        }*/
+        members.forEach(main.Member::start);
     }
 }
