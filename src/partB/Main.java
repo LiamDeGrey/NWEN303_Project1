@@ -1,4 +1,4 @@
-package main;
+package partB;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +21,6 @@ public class Main {
         }
         Collections.shuffle(members);
 
-        members.forEach(main.Member::start);
+        members.forEach(Member::start);
     }
 }

@@ -1,4 +1,4 @@
-package main;
+package partB;
 
 import java.util.ArrayList;
 
@@ -101,14 +101,6 @@ public class BulletinBoard {
         System.out.println();
         for (int serviceId : serviceNeededIds) {
             System.out.print(serviceId + ", ");
-        }
-    }
-
-    public static void removeService(Member member) {
-        if (member instanceof Client) {
-            removeServiceNeeded((Client) member);
-        } else {
-            removeServiceProvided((Provider) member);
         }
     }
 }
