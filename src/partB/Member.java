@@ -29,7 +29,7 @@ public abstract class Member extends Thread {
         while (count != MAX_SERVICE_REQUESTS) {
 
             try {
-                sleep((int) (Math.random() * 499) + 1);
+                sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -39,27 +39,27 @@ public abstract class Member extends Thread {
 
             preTime = System.currentTimeMillis();
             if ((placesLeft = checkService()) != 0) {
-                //System.out.println(id + "'s time taken to check service : " + (System.currentTimeMillis() - preTime) + "ms");
                 preTime = System.currentTimeMillis();
                 postService();
-                //System.out.println(id + "'s time taken to post service : " + (System.currentTimeMillis() - preTime) + "ms");
-            }
+                System.out.println("Service " + id + "'s time taken to submit service : " + (System.currentTimeMillis() - preTime) + "ms");
 
-            int i = 0;
-            while (!serviceMet && i != MAX_WAIT_LOOP) {
-                try {
-                    sleep((int) (Math.random() * 499) + 1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                int i = 0;
+                while (!serviceMet && i != MAX_WAIT_LOOP) {
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    i++;
                 }
-                i++;
-            }
 
 
-            if (i == MAX_WAIT_LOOP) {
-                removeService();
-            } else {
-                //System.out.println(id + "'s time taken for post to be accepted : " + (System.currentTimeMillis() - preTime) + "ms");
+                if (i == MAX_WAIT_LOOP) {
+                    removeService();
+                    System.out.println("Service " + id + "'s time taken for post to timeout : " + (System.currentTimeMillis() - preTime) + "ms");
+                } else {
+                    System.out.println("Service " + id + "'s time taken for post to be accepted : " + (System.currentTimeMillis() - preTime) + "ms");
+                }
             }
 
             serviceMet = false;

@@ -23,6 +23,6 @@ public class Provider extends Member {
 
     @Override
     protected void removeService() {
-        BulletinBoard.removeServiceProvided(this);
+        BulletinBoard.removeServiceProvided(this );
     }
 }

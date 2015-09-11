@@ -25,7 +25,7 @@ public class BulletinBoard {
     public static int checkServiceProvided(final int serviceProvidedId) {
         if (serviceProvidedIds.contains(serviceProvidedId)) {
             try {
-                Thread.sleep((int) (Math.random() * 499) + 1);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

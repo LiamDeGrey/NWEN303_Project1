@@ -23,7 +23,7 @@ public class BulletinBoard {
     public static boolean checkServiceProvided(final int serviceProvidedId) {
         if (serviceProvidedIds.contains(serviceProvidedId)) {
             try {
-                Thread.sleep((int) (Math.random() * 499) + 1);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -33,11 +33,13 @@ public class BulletinBoard {
                 final int index = serviceProvidedIds.indexOf(element);
                 if (serviceProvidedIds.remove(element)) {
                     serviceProvidedMember.remove(index).serviceMet();
-                    System.out.println("Service provided removed : " + serviceProvidedId);
+                    System.out.println("Service provided fulfilled");
+                    return true;
+                } else {
+                    System.out.println("Service provided already taken");
+                    return false;
                 }
             }
-
-            return true;
         }
         return false;
     }
@@ -48,13 +50,6 @@ public class BulletinBoard {
             if (serviceProvidedMember.remove(provider)) {
                 serviceProvidedIds.remove(index);
             }
-        }
-    }
-
-    public static void printServiceProvidedArray() {
-        System.out.println();
-        for (int i = 0; i < serviceProvidedIds.size(); i++) {
-            System.out.print(serviceProvidedIds.get(i) + ", ");
         }
     }
 
@@ -69,7 +64,7 @@ public class BulletinBoard {
     public static boolean checkServiceNeeded(final int serviceNeededId) {
         if (serviceNeededIds.contains(serviceNeededId)) {
             try {
-                Thread.sleep((int) (Math.random() * 499) + 1);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -79,11 +74,13 @@ public class BulletinBoard {
                 final int index = serviceNeededIds.indexOf(element);
                 if (serviceNeededIds.remove(element)) {
                     serviceNeededMember.remove(index).serviceMet();
-                    System.out.println("Service needed removed : " + serviceNeededId);
+                    System.out.println("Service needed fulfilled");
+                    return true;
+                } else {
+                    System.out.println("Service needed already taken");
+                    return false;
                 }
             }
-
-            return true;
         }
         return false;
     }
@@ -94,13 +91,6 @@ public class BulletinBoard {
             if (serviceNeededMember.remove(client)) {
                 serviceNeededIds.remove(index);
             }
-        }
-    }
-
-    public static void printServiceNeededArray() {
-        System.out.println();
-        for (int serviceId : serviceNeededIds) {
-            System.out.print(serviceId + ", ");
         }
     }
 }
