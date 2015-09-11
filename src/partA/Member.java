@@ -32,7 +32,6 @@ public abstract class Member extends Thread {
             if (!checkService()) {
                 preTime = System.currentTimeMillis();
                 postService();
-                System.out.println("Service " + id + "'s time taken to submit service : " + (System.currentTimeMillis() - preTime) + "ms");
 
                 int i = 0;
                 while (!serviceMet && i != MAX_WAIT_LOOP) { //Will wait for 500 * MAX_WAIT_LOOP ms at most
