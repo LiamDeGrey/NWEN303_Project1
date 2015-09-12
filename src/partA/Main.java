@@ -8,6 +8,7 @@ import java.util.Random;
  */
 public class Main {
     private static Random randomGenerator;
+    public static int sleepTime;
 
     private static int threadsStarted = 0;
     private static int providedServicesAdded = 0;
@@ -55,6 +56,7 @@ public class Main {
 
         int numClients = args.length > 0 ? Integer.parseInt(args[0]) : 5;
         int numProviders = args.length > 1 ? Integer.parseInt(args[1]) : 5;
+        sleepTime = args.length > 2 ? Integer.parseInt(args[2]) : 500;
 
         final ArrayList<Member> members = new ArrayList<>();
         while (numClients+numProviders > 0) {

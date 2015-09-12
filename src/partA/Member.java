@@ -12,7 +12,6 @@ public abstract class Member extends Thread {
     protected int serviceId;
     private int count = 0;
     private boolean serviceMet = false;
-    private long preTime;
 
     protected Member() {
         threadId++;
@@ -25,30 +24,23 @@ public abstract class Member extends Thread {
         Main.incrementThreadsStarted();
 
         while (count != 5) {
-
             serviceId = Main.getServiceId();
 
-            preTime = System.currentTimeMillis();
             if (!checkService()) {
-                preTime = System.currentTimeMillis();
                 postService();
 
                 int i = 0;
                 while (!serviceMet && i != MAX_WAIT_LOOP) { //Will wait for 500 * MAX_WAIT_LOOP ms at most
                     try {
-                        sleep(500);
+                        sleep(Main.sleepTime);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     i++;
                 }
 
-
                 if (i == MAX_WAIT_LOOP) {
                     removeService();
-                    //System.out.println("Service " + id + "'s time taken for post to timeout : " + (System.currentTimeMillis() - preTime) + "ms");
-                } else {
-                    //System.out.println("Service " + id + "'s time taken for post to be accepted : " + (System.currentTimeMillis() - preTime) + "ms");
                 }
             }
 

@@ -29,7 +29,7 @@ public class BulletinBoard {
     public static boolean checkServiceProvided(final int serviceProvidedId) {
         if (serviceProvidedIds.contains(serviceProvidedId)) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(Main.sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -73,7 +73,7 @@ public class BulletinBoard {
     public static boolean checkServiceNeeded(final int serviceNeededId) {
         if (serviceNeededIds.contains(serviceNeededId)) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(Main.sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
