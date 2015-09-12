@@ -22,7 +22,7 @@ public abstract class Member extends Thread {
     public void run() {
         super.run();
 
-        System.out.println("Service " + id + " started");
+        Main.incrementThreadsStarted();
 
         while (count != 5) {
 
@@ -46,9 +46,9 @@ public abstract class Member extends Thread {
 
                 if (i == MAX_WAIT_LOOP) {
                     removeService();
-                    System.out.println("Service " + id + "'s time taken for post to timeout : " + (System.currentTimeMillis() - preTime) + "ms");
+                    //System.out.println("Service " + id + "'s time taken for post to timeout : " + (System.currentTimeMillis() - preTime) + "ms");
                 } else {
-                    System.out.println("Service " + id + "'s time taken for post to be accepted : " + (System.currentTimeMillis() - preTime) + "ms");
+                    //System.out.println("Service " + id + "'s time taken for post to be accepted : " + (System.currentTimeMillis() - preTime) + "ms");
                 }
             }
 

@@ -23,7 +23,7 @@ public class BulletinBoard {
         serviceProvidedIds.add(serviceProvidedId);
         serviceProvidedMember.add((Provider) Thread.currentThread());
         providedIdsAddLock.unlock();
-        System.out.println("Service provided added : " + serviceProvidedId);
+        Main.incrementProvidedServicesAdded();
     }
 
     public static boolean checkServiceProvided(final int serviceProvidedId) {
@@ -41,11 +41,10 @@ public class BulletinBoard {
             if (serviceProvidedIds.remove(element)) {
                 serviceProvidedMember.remove(index).serviceMet();
                 providedIdsRemoveLock.unlock();
-                System.out.println("Service provided fulfilled");
+                Main.incrementServicesFulfilled();
                 return true;
             } else {
-                providedIdsRemoveLock.unlock();
-                System.out.println("Service provided already taken");
+                providedIdsRemoveLock.unlock();Main.incrementServicesAlreadyTaken();
                 return false;
             }
         }
@@ -58,6 +57,7 @@ public class BulletinBoard {
         final int index = serviceProvidedMember.indexOf(provider);
         if (serviceProvidedMember.remove(provider)) {
             serviceProvidedIds.remove(index);
+            Main.incrementServicesTimedOut();
         }
         providedIdsRemoveLock.unlock();
     }
@@ -67,7 +67,7 @@ public class BulletinBoard {
         serviceNeededIds.add(serviceNeededId);
         serviceNeededMember.add((Client) Thread.currentThread());
         neededIdsAddLock.unlock();
-        System.out.println("Service needed added : " + serviceNeededId);
+        Main.incrementNeededServicesAdded();
     }
 
     public static boolean checkServiceNeeded(final int serviceNeededId) {
@@ -84,11 +84,11 @@ public class BulletinBoard {
             if (serviceNeededIds.remove(element)) {
                 serviceNeededMember.remove(index).serviceMet();
                 neededIdsRemoveLock.unlock();
-                System.out.println("Service needed fulfilled");
+                Main.incrementServicesFulfilled();
                 return true;
             } else {
                 neededIdsRemoveLock.unlock();
-                System.out.println("Service needed already taken");
+                Main.incrementServicesAlreadyTaken();
                 return false;
             }
         }
@@ -100,6 +100,7 @@ public class BulletinBoard {
         final int index = serviceNeededMember.indexOf(client);
         if (serviceNeededMember.remove(client)) {
             serviceNeededIds.remove(index);
+            Main.incrementServicesTimedOut();
         }
         neededIdsRemoveLock.unlock();
     }
