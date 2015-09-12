@@ -4,8 +4,6 @@ package partA;
  * Created by Liam on 19-Aug-15.
  */
 public abstract class Member extends Thread {
-    private static final int MAX_WAIT_LOOP = 10;
-
     protected static int threadId = -1;
 
     protected String id;
@@ -30,7 +28,7 @@ public abstract class Member extends Thread {
                 postService();
 
                 int i = 0;
-                while (!serviceMet && i != MAX_WAIT_LOOP) { //Will wait for 500 * MAX_WAIT_LOOP ms at most
+                while (!serviceMet && i != Main.maxWaitingLoops) { //Will wait for sleeptime * MAX_WAIT_LOOP ms at most
                     try {
                         sleep(Main.sleepTime);
                     } catch (InterruptedException e) {
@@ -39,7 +37,7 @@ public abstract class Member extends Thread {
                     i++;
                 }
 
-                if (i == MAX_WAIT_LOOP) {
+                if (i == Main.maxWaitingLoops) {
                     removeService();
                 }
             }

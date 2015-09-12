@@ -1,12 +1,10 @@
 package partB;
 
+
 /**
  * Created by Liam on 19-Aug-15.
  */
 public abstract class Member extends Thread {
-    private static final int MAX_WAIT_LOOP = 10;
-    private static final int MAX_SERVICE_REQUESTS = 3;
-
     protected static int threadId = -1;
 
     protected String id;
@@ -14,7 +12,6 @@ public abstract class Member extends Thread {
     protected int placesLeft;
     private int count = 0;
     private boolean serviceMet = false;
-    private long preTime;
 
     protected Member() {
         threadId++;
@@ -24,41 +21,25 @@ public abstract class Member extends Thread {
     public void run() {
         super.run();
 
-        System.out.println(id + " started");
+        while (count != 5) {
+            serviceId = Main.getServiceId();
+            placesLeft = Main.getPlacesLeft();
 
-        while (count != MAX_SERVICE_REQUESTS) {
-
-            try {
-                sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            serviceId = (int) (Math.random() * 2) + 1;
-            placesLeft = (int) (Math.random() * 5) + 1;
-
-            preTime = System.currentTimeMillis();
             if ((placesLeft = checkService()) != 0) {
-                preTime = System.currentTimeMillis();
                 postService();
-                System.out.println("Service " + id + "'s time taken to submit service : " + (System.currentTimeMillis() - preTime) + "ms");
 
                 int i = 0;
-                while (!serviceMet && i != MAX_WAIT_LOOP) {
+                while (!serviceMet && i != partA.Main.maxWaitingLoops) { //Will wait for sleeptime * MAX_WAIT_LOOP ms at most
                     try {
-                        sleep(500);
+                        sleep(partA.Main.sleepTime);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     i++;
                 }
 
-
-                if (i == MAX_WAIT_LOOP) {
+                if (i == partA.Main.maxWaitingLoops) {
                     removeService();
-                    System.out.println("Service " + id + "'s time taken for post to timeout : " + (System.currentTimeMillis() - preTime) + "ms");
-                } else {
-                    System.out.println("Service " + id + "'s time taken for post to be accepted : " + (System.currentTimeMillis() - preTime) + "ms");
                 }
             }
 

@@ -1,6 +1,8 @@
 package partB;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Liam on 19-Aug-15.
@@ -12,14 +14,19 @@ public class BulletinBoard {
     final private static ArrayList<Integer> serviceNeededIds = new ArrayList<>();
     final private static ArrayList<Client> serviceNeededMember = new ArrayList<>();
 
+    private static Lock providedIdsRemoveLock = new ReentrantLock();
+    private static Lock providedIdsAddLock = new ReentrantLock();
+    private static Lock neededIdsRemoveLock = new ReentrantLock();
+    private static Lock neededIdsAddLock = new ReentrantLock();
+
 
     public static void postServiceProvided(final int serviceProvidedId, final int serviceProvidedPlaces) {
-        synchronized (serviceProvidedIds) {
-            serviceProvidedIds.add(serviceProvidedId);
-            serviceProvidedPlacesLeft.add(serviceProvidedPlaces);
-            serviceProvidedMember.add((Provider) Thread.currentThread());
-        }
-        System.out.println("Service provided added : " + serviceProvidedId);
+        providedIdsAddLock.lock();
+        serviceProvidedIds.add(serviceProvidedId);
+        serviceProvidedPlacesLeft.add(serviceProvidedPlaces);
+        serviceProvidedMember.add((Provider) Thread.currentThread());
+        providedIdsAddLock.unlock();
+        Main.incrementProvidedServicesAdded();
     }
 
     public static int checkServiceProvided(final int serviceProvidedId) {
@@ -64,13 +71,6 @@ public class BulletinBoard {
         }
     }
 
-    public static void printServiceProvidedArray() {
-        System.out.println();
-        for (int i = 0; i < serviceProvidedIds.size(); i++) {
-            System.out.print(serviceProvidedIds.get(i) + ", ");
-        }
-    }
-
     public static void postServiceNeeded(final int serviceNeededId) {
         synchronized (serviceNeededIds) {
             serviceNeededIds.add(serviceNeededId);
@@ -108,13 +108,6 @@ public class BulletinBoard {
             if (serviceNeededMember.remove(client)) {
                 serviceNeededIds.remove(index);
             }
-        }
-    }
-
-    public static void printServiceNeededArray() {
-        System.out.println();
-        for (int serviceId : serviceNeededIds) {
-            System.out.print(serviceId + ", ");
         }
     }
 }

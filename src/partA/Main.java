@@ -7,8 +7,9 @@ import java.util.Random;
  * Created by Liam on 19-Aug-15.
  */
 public class Main {
-    private static Random randomGenerator;
+    private static Random serviceIdGenerator;
     public static int sleepTime;
+    public static int maxWaitingLoops;
 
     private static int threadsStarted = 0;
     private static int providedServicesAdded = 0;
@@ -18,7 +19,7 @@ public class Main {
     private static int servicesTimedOut = 0;
 
     public static synchronized int getServiceId() {
-        return randomGenerator.nextInt(2);
+        return serviceIdGenerator.nextInt(2);
     }
 
     public static synchronized void incrementThreadsStarted() {
@@ -52,11 +53,12 @@ public class Main {
     }
 
     public static void main(final String[] args) {
-        randomGenerator = new Random(1);
+        serviceIdGenerator = new Random(1);
 
         int numClients = args.length > 0 ? Integer.parseInt(args[0]) : 5;
         int numProviders = args.length > 1 ? Integer.parseInt(args[1]) : 5;
         sleepTime = args.length > 2 ? Integer.parseInt(args[2]) : 500;
+        maxWaitingLoops = args.length > 3 ? Integer.parseInt(args[3]) : 10;
 
         final ArrayList<Member> members = new ArrayList<>();
         while (numClients+numProviders > 0) {
